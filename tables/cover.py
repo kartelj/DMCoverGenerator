@@ -7,12 +7,14 @@ import style.cover as style
 
 class Cover():
 
-    def __init__(self,sources,collection=None):
+    def __init__(self,year,quarter,sources,collection=None):
         self.sources = sources
         self.collection = collection
+        self.CURRENT_YEAR = year
+        self.QUARTER = quarter
         
         if collection != None:
-            self.fn = f.Functions(collection)
+            self.fn = f.Functions(year,quarter,collection)
             if 'grp' in sources:
                 self.grp_channels = self.fn.channels_for_customer2()
                 self.grp_customers_v = self.fn.total_customer_for_month(self.grp_channels)
@@ -33,9 +35,7 @@ class Cover():
                 self.last_year_total = self.fn.SOI_total_ly(self.fn.e2_collection) + self.fn.SOI_total_ly(self.fn.cas_collection)
                 self.soi_grp_channels = self.fn.channels_for_customer2()
                 self.dm_pool = self.fn.total_customer_for_month(self.soi_grp_channels)['DM Pool']
-                # self.dm_total_quarter = self.fn.grp_customers_quarter(self.grp_customers_v)['DM Pool']
-        self.CURRENT_YEAR = self.fn.CURRENT_YEAR
-        self.QUARTER = self.fn.QUARTER
+
         self.headers = ["{0} FY".format(self.CURRENT_YEAR-1), "{0} JAN".format(self.CURRENT_YEAR), "{0} FEB".format(self.CURRENT_YEAR), "{0} MAR".format(self.CURRENT_YEAR), "{0} Q1".format(self.CURRENT_YEAR), "{0} APR".format(self.CURRENT_YEAR), "{0} MAJ".format(self.CURRENT_YEAR), "{0} JUN".format(self.CURRENT_YEAR), "{0} Q2".format(self.CURRENT_YEAR), "{0} JUL".format(self.CURRENT_YEAR), "{0} AVG".format(self.CURRENT_YEAR), "{0} SEP".format(self.CURRENT_YEAR), "{0} Q3".format(self.CURRENT_YEAR), "{0} OKT".format(self.CURRENT_YEAR), "{0} NOV".format(self.CURRENT_YEAR), "{0} DEC".format(self.CURRENT_YEAR), "{0} Q4".format(self.CURRENT_YEAR), "{0} ytd".format(self.CURRENT_YEAR)]
 
     def total_table(self):

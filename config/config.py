@@ -5,7 +5,7 @@ import datetime
 class Config():
     now=datetime.datetime.now()
     csvName = 'Kvartalni_TV_'+str('{:02d}_'.format(now.day))+str('{:02d}_'.format(now.month))+str(now.year)+'.xlsx'
-    PATH = "Q3_poslednji.xlsx"
+    PATH = "baza_kvartalni.xlsx"
     NEW_FILE_PATH = csvName
 
     wb = Workbook()

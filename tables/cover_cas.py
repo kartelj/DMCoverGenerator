@@ -6,12 +6,14 @@ import style.cover as style
 
 class CoverCas():
 
-    def __init__(self,sources,collection=None):
+    def __init__(self,year,quarter,sources,collection=None):
         self.sources = sources
         self.collection = collection
+        self.CURRENT_YEAR = year
+        self.QUARTER = quarter
 
         if collection != None:
-            self.fn = cf.CasFunctions(collection)
+            self.fn = cf.CasFunctions(year,quarter,collection)
             if 'grp' in sources:
                 self.grp_channels = self.fn.channels_for_customer2()
                 self.grp_customers_v = self.fn.total_customer_for_month(self.grp_channels)
@@ -41,8 +43,6 @@ class CoverCas():
                 self.soi_cas_others_channels_ly = self.fn.soi_cas_others_channels_ly(self.soi_channel_total_ly)
                 self.cas_media_channels_ly = self.fn.cas_media_channels_ly(self.soi_channel_total_ly)
 
-        self.CURRENT_YEAR = cf.CasFunctions().CURRENT_YEAR
-        self.QUARTER = cf.CasFunctions().QUARTER
         self.headers = ["{0} FY".format(self.CURRENT_YEAR-1), "{0} JAN".format(self.CURRENT_YEAR), "{0} FEB".format(self.CURRENT_YEAR), "{0} MAR".format(self.CURRENT_YEAR), "{0} Q1".format(self.CURRENT_YEAR), "{0} APR".format(self.CURRENT_YEAR), "{0} MAJ".format(self.CURRENT_YEAR), "{0} JUN".format(self.CURRENT_YEAR), "{0} Q2".format(self.CURRENT_YEAR), "{0} JUL".format(self.CURRENT_YEAR), "{0} AVG".format(self.CURRENT_YEAR), "{0} SEP".format(self.CURRENT_YEAR), "{0} Q3".format(self.CURRENT_YEAR), "{0} OKT".format(self.CURRENT_YEAR), "{0} NOV".format(self.CURRENT_YEAR), "{0} DEC".format(self.CURRENT_YEAR), "{0} Q4".format(self.CURRENT_YEAR), "{0} ytd".format(self.CURRENT_YEAR)]
 
 
