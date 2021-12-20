@@ -1,20 +1,14 @@
 # -*- coding: utf-8 -*- 
 import tables.cover as cov
 import tables.cover_cas as cov_cas
-# import create_images_from_covers as cifc
 import excel2img
 from pathlib import Path
+import sys
 
 def add_rows(data, size):
     for i in range(size):
         data.append([])
-
-# def export_images(cover, cover_cas):
-#     print("Export images")
-#     config = cov.f.cfg.Config()
-#     cifc.exportCoverImages(config.NEW_FILE_PATH,cover,cover_cas)
                         
-
 def exportCoverImages(csvName,cover,cover_cas):
     csvDirMarko = csvName.replace('.','_')+'/cover'
     Path(csvDirMarko).mkdir(parents=True, exist_ok=True)
@@ -42,7 +36,7 @@ def exportCoverImages(csvName,cover,cover_cas):
 
     excel2img.export_imgs(csvName, coverMarkoCasImagesWithDir ,"COVER Cas Marko", coverMarkoCasRanges)
 
-def run():
+def run(year,quarter):
     config = cov.f.cfg.Config()
     wb = config.wb
     ws = config.ws
@@ -54,22 +48,22 @@ def run():
     print('Ucitava covers')
     # Total
     coll = config.collection(config.grp_baza,[8,4,3,20,17])
-    cover = cov.Cover(['grp'],coll)
+    cover = cov.Cover(year,quarter,['grp'],coll)
 
     # 18-50
     coll2 = config.collection(config.grp_baza,[12,4,3,20,17])
-    cover2 = cov.Cover(['grp'],coll2)
+    cover2 = cov.Cover(year,quarter,['grp'],coll2)
 
     # Duration
     coll3 = config.collection(config.grp_baza,[24,4,3,20,17])
-    cover3 = cov.Cover(['duration'],coll3)
+    cover3 = cov.Cover(year,quarter,['duration'],coll3)
 
     # SOI
-    cover4 = cov.Cover(['soi'],coll)
+    cover4 = cov.Cover(year,quarter,['soi'],coll)
 
-    cover5 = cov.Cover(['grp','soi'],coll)
+    cover5 = cov.Cover(year,quarter,['grp','soi'],coll)
 
-    cover6 = cov.Cover(['grp','soi'],coll2)
+    cover6 = cov.Cover(year,quarter,['grp','soi'],coll2)
 
     sov1 = cover.sov1()
     sov2 = cover2.sov2()
@@ -245,21 +239,21 @@ def run():
     ###################
 
     cas_coll = config.collection(config.grp_baza,[8,4,3,20,2])
-    cas_cover = cov_cas.CoverCas(['grp'],cas_coll)
+    cas_cover = cov_cas.CoverCas(year,quarter,['grp'],cas_coll)
 
 
     cas_coll2 = config.collection(config.grp_baza,[12,4,3,20,2])
-    cas_cover2 = cov_cas.CoverCas(['grp'],cas_coll2)
+    cas_cover2 = cov_cas.CoverCas(year,quarter,['grp'],cas_coll2)
 
     cas_coll3 = config.collection(config.grp_baza,[24,4,3,20,2])
-    cas_cover3 = cov_cas.CoverCas(['duration'],cas_coll3)
+    cas_cover3 = cov_cas.CoverCas(year,quarter,['duration'],cas_coll3)
 
 
-    cas_cover4 = cov_cas.CoverCas(['soi'],cas_coll)
+    cas_cover4 = cov_cas.CoverCas(year,quarter,['soi'],cas_coll)
 
-    cas_cover5 = cov_cas.CoverCas(['grp','soi'],cas_coll)
+    cas_cover5 = cov_cas.CoverCas(year,quarter,['grp','soi'],cas_coll)
 
-    cas_cover6 = cov_cas.CoverCas(['grp','soi'],cas_coll2)
+    cas_cover6 = cov_cas.CoverCas(year,quarter,['grp','soi'],cas_coll2)
 
     data3 = []
     cover_cas_rows = {}
@@ -390,15 +384,17 @@ def run():
 
 
     cov.style.cover_style(ws,cover_rows)
-    cover_img = cov.style.marko_cover_style(ws2,cov.f.Functions().QUARTER,cover_marko_rows)
+    cover_img = cov.style.marko_cover_style(ws2,quarter,cover_marko_rows)
     cov.style.cover_cas_style(ws3,cover_cas_rows)
-    cover_cas_img = cov.style.marko_cover_cas_style(ws4,cov.f.Functions().QUARTER,cover_cas_marko_rows)
+    cover_cas_img = cov.style.marko_cover_cas_style(ws4,quarter,cover_cas_marko_rows)
 
     print('SAVING EXCEL FILE!')
     wb.save(config.NEW_FILE_PATH)
+    
 
-    exportCoverImages(config.NEW_FILE_PATH, cover_img,cover_cas_img)
+    exportCoverImages(config.NEW_FILE_PATH, cover_img, cover_cas_img)
 
     print('KRAJ!')
+
 if __name__ == "__main__":
-    run()
+    run(int(sys.argv[1]),int(sys.argv[2]))

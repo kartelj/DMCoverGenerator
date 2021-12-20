@@ -145,7 +145,7 @@ def set_cell_width(ws):
 
 def cover_style(ws,row_size):
     set_cell_width(ws)
-    ws.column_dimensions['A'].width = 25
+    ws.column_dimensions['A'].width = 15
 
     start = row_size['total'][0]
     end = row_size['total'][1]
@@ -523,7 +523,7 @@ def cover_style(ws,row_size):
 
 def marko_cover_style(ws,quarter,row_size):
     set_cell_width(ws)
-    ws.column_dimensions['A'].width = 25
+    ws.column_dimensions['A'].width = 15
 
     images = {}
     start = row_size['sov1'][0]
@@ -852,7 +852,7 @@ def marko_cover_style(ws,quarter,row_size):
 
 def cover_cas_style(ws,row_size):
     set_cell_width(ws)
-    ws.column_dimensions['A'].width = 30
+    ws.column_dimensions['A'].width = 15
 
 
     start = row_size['total'][0]
@@ -1277,7 +1277,7 @@ def cover_cas_style(ws,row_size):
 
 def marko_cover_cas_style(ws,quarter,row_size):
     set_cell_width(ws)
-    ws.column_dimensions['A'].width = 25
+    ws.column_dimensions['A'].width = 15
 
     images = {}
     start = row_size['sov1'][0]

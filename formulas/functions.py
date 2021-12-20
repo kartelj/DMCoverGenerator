@@ -6,11 +6,6 @@ from config import config as cfg
 
 
 class Functions():
-    CURRENT_YEAR = date.today().year
-    QUARTER = int(date.today().month/3)
-
-    headers = ["{0} FY".format(CURRENT_YEAR-1), "{0} JAN".format(CURRENT_YEAR), "{0} FEB".format(CURRENT_YEAR), "{0} MAR".format(CURRENT_YEAR), "{0} Q1".format(CURRENT_YEAR), "{0} APR".format(CURRENT_YEAR), "{0} MAJ".format(CURRENT_YEAR), "{0} JUN".format(CURRENT_YEAR), "{0} Q2".format(CURRENT_YEAR), "{0} JUL".format(CURRENT_YEAR), "{0} AVG".format(CURRENT_YEAR), "{0} SEP".format(CURRENT_YEAR), "{0} Q3".format(CURRENT_YEAR), "{0} OKT".format(CURRENT_YEAR), "{0} NOV".format(CURRENT_YEAR), "{0} DEC".format(CURRENT_YEAR), "{0} Q4".format(CURRENT_YEAR), "{0} ytd".format(CURRENT_YEAR)]
-
     config = cfg.Config()
     grp_baza = config.grp_baza
     e2_baza = config.e2_baza
@@ -48,8 +43,10 @@ class Functions():
     }
 
 
-    def __init__(self,collection=None):
+    def __init__(self,year,quarter,collection=None):
         self.collection = collection
+        self.CURRENT_YEAR = year
+        self.QUARTER = quarter
 
     ###################### NOVE FUNKCIJE #####################
     def channel_total_ly(self,customer,channel):
