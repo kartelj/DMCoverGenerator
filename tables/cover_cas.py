@@ -249,13 +249,15 @@ class CoverCas():
 
                 ch = [float_with_comma(round(last_year))]
                 for q in range(1,self.QUARTER):
-                    ch += [float_with_comma(round(value[ct]+value[ct+1]+value[ct+2]))]
-                ch += [float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]])),float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]+1])),float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]+2])),float_with_comma(round(value[ct]+value[ct+1]+value[ct+2])),float_with_comma(round(total_amount))]
+                    t = self.fn.range_by_quarter[q]
+                    ch += [float_with_comma(round(value[t]+value[t+1]+value[t+2]))]
+                ch += [float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]])),float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]+1])),float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]+2])),float_with_comma(round(value[self.fn.range_by_quarter[self.QUARTER]]+value[self.fn.range_by_quarter[self.QUARTER]+1]+value[self.fn.range_by_quarter[self.QUARTER]+2])),float_with_comma(round(total_amount))]
 
                 ch += [calculate_percente(last_year,self.total_customer_ly[cas])]
                 for q in range(1,self.QUARTER):
-                    ch += [calculate_percente(value[ct]+value[ct+1]+value[ct+2],cas_total[ct]+cas_total[ct+1]+cas_total[ct+2])]
-                ch += [calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]],cas_total[self.fn.range_by_quarter[self.QUARTER]]),calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]+1],cas_total[self.fn.range_by_quarter[self.QUARTER]+1]),calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]+2],cas_total[self.fn.range_by_quarter[self.QUARTER]+2]),calculate_percente(value[ct]+value[ct+1]+value[ct+2],cas_total[ct]+cas_total[ct+1]+cas_total[ct+2]),calculate_percente(total_amount,sum(cas_total.values()))]
+                    t = self.fn.range_by_quarter[q]
+                    ch += [calculate_percente(value[t]+value[t+1]+value[t+2],cas_total[t]+cas_total[t+1]+cas_total[t+2])]
+                ch += [calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]],cas_total[self.fn.range_by_quarter[self.QUARTER]]),calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]+1],cas_total[self.fn.range_by_quarter[self.QUARTER]+1]),calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]+2],cas_total[self.fn.range_by_quarter[self.QUARTER]+2]),calculate_percente(value[self.fn.range_by_quarter[self.QUARTER]]+value[self.fn.range_by_quarter[self.QUARTER]+1]+value[self.fn.range_by_quarter[self.QUARTER]+2],cas_total[self.fn.range_by_quarter[self.QUARTER]]+cas_total[self.fn.range_by_quarter[self.QUARTER]+1]+cas_total[self.fn.range_by_quarter[self.QUARTER]+2]),calculate_percente(total_amount,sum(cas_total.values()))]
                     
                 sov["{0}_{1}".format(cas,c)] = ch
 
