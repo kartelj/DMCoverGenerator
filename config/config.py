@@ -23,16 +23,29 @@ class Config():
     shr_baza = file['BAZA Shr TV']
     cas_baza = file['BAZA CAS']
 
+    # channel_map = {
+    #     'RTS': ('RTS 1', 'RTS 2'),
+    #     'B92': ('B92',),
+    #     'PINK': ('PINK',),
+    #     'PINK Cable': ('Pink cable total',),
+    #     'Ostali': ('Other', 'RTS 3', 'RTS Drama', 'RTS Trezor', 'RTS Zivot', 'RTS Muzika', 'RTS Kolo', 'RTS Poletarac', 'RTS Nauka', 'RTS Klasika', 'RTV 1', 'RTV 2', 'Melos Kraljevo', 'Minimax', 'Agro TV', 'Kitchen TV', 'SUPERSTAR 2', 'SUPERSTAR TV', 'FILM KLUB', 'ArenaSport 1', 'Arena Sport 2', 'Arena Sport 3', 'Arena Sport 4', 'Arena Sport 5', 'Toxic TV', 'Dox TV', 'Klasik TV', 'Dexy TV', 'K1', 'Kazbuka', 'TV Doktor', 'Arena Fight', 'Balkan Trip', 'Kurir TV', 'Studio B'),
+    #     'PRVA': ('PRVA',),
+    #     'PRVA Cable': ('PRVA Plus', 'PRVA Max', 'PRVA World', 'PRVA Kick', 'PRVA Life', 'PRVA Files'),
+    #     'Cas Media': ('N1', 'Grand Kanal', 'Cinemania', 'Nova S', 'IDJ', 'SK 1', 'SK 2', 'SK 3', 'Pikaboo', 'Vavoom', 'CineStar', 'CineStar Action', 'Discovery', 'Discovery ID', 'HGTV', 'TLC', 'DIVA - Universal', 'AXN', 'Nickelodeon', 'TV 1000', 'NickJr', 'Nova Sport', 'Animal Planet'),
+    #     'Fox': ('Fox', 'Fox Crime', 'Fox Life', 'Fox Movies', 'National Geographic', '24 Kitchen'),
+    #     'Happy': ('Happy',)
+    # }
+
     channel_map = {
-        'RTS': ('RTS 1', 'RTS 2'),
+        'RTS': ('RTS zajedno (RTS 1+RTS 2)',),
         'B92': ('B92',),
         'PINK': ('PINK',),
         'PINK Cable': ('Pink cable total',),
-        'Ostali': ('Other', 'RTS 3', 'RTS Drama', 'RTS Trezor', 'RTS Zivot', 'RTS Muzika', 'RTS Kolo', 'RTS Poletarac', 'RTS Nauka', 'RTS Klasika', 'RTV 1', 'RTV 2', 'Melos Kraljevo', 'Minimax', 'Agro TV', 'Kitchen TV', 'SUPERSTAR 2', 'SUPERSTAR TV', 'FILM KLUB', 'ArenaSport 1', 'Arena Sport 2', 'Arena Sport 3', 'Arena Sport 4', 'Arena Sport 5', 'Toxic TV', 'Dox TV', 'Klasik TV', 'Dexy TV', 'K1', 'Kazbuka', 'TV Doktor', 'Arena Fight', 'Balkan Trip', 'Kurir TV', 'Studio B'),
+        'Ostali': ('Other Total',),
         'PRVA': ('PRVA',),
-        'PRVA Cable': ('PRVA Plus', 'PRVA Max', 'PRVA World', 'PRVA Kick', 'PRVA Life', 'PRVA Files'),
-        'Cas Media': ('N1', 'Grand Kanal', 'Cinemania', 'Nova S', 'IDJ', 'SK 1', 'SK 2', 'SK 3', 'Pikaboo', 'Vavoom', 'CineStar', 'CineStar Action', 'Discovery', 'Discovery ID', 'HGTV', 'TLC', 'DIVA - Universal', 'AXN', 'Nickelodeon', 'TV 1000', 'NickJr', 'Nova Sport', 'Animal Planet'),
-        'Fox': ('Fox', 'Fox Crime', 'Fox Life', 'Fox Movies', 'National Geographic', '24 Kitchen'),
+        'PRVA Cable': ('Prva cable total',),
+        'Cas Media': ('Cas cable total',),
+        'Fox': ('Fox cable Total',),
         'Happy': ('Happy',)
     }
 
