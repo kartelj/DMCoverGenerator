@@ -29,7 +29,13 @@ class CoverCas():
                 self.n1_nova_s_duration = self.fn.n1_nova_s_duration(self.c_duration)
                 self.cas_others_duration = self.fn.cas_others_duration(self.c_duration)
                 self.duration_total_by_month = self.fn.duration_total_by_month()
-                self.duration_ly = self.fn.cas_duration_ly
+                #last year
+                self.c_duration_last_year = self.fn.last_year_duration_channel_total()
+                self.cas_duration_last_year = self.fn.last_year_cas_duration(self.c_duration_last_year)
+                self.cas_others_duration_last_year = self.fn.cas_others_duration_last_year(self.c_duration_last_year)
+                self.duration_total_by_month_last_year = self.fn.duration_all_customers_total_ly()
+                self.all_duration_last_year = self.fn.total_duration_for_months_last_year(self.cas_duration_last_year)
+                self.n1_nova_s_duration_last_year = self.fn.n1_nova_s_duration_last_year(self.c_duration_last_year)
             if 'soi' in sources:
                 self.soi_total2 = self.fn.e2_channel_total()
                 self.cas_media_total = self.fn.cas_media_total(self.soi_total2)
@@ -377,39 +383,44 @@ class CoverCas():
         return data
 
 
-    def duration(self,cover_duration):
+    def duration(self):
         data = [['DURATION']]
         data.append(['Row Labels']+self.headers)
 
         n1 = self.n1_nova_s_duration['N1']
         nova_s = self.n1_nova_s_duration['Nova S']
+        n1_ly = self.n1_nova_s_duration_last_year['N1']
+        nova_s_ly = self.n1_nova_s_duration_last_year['Nova S']
 
-        data.append(['CAS Media','{0} %'.format(round(self.duration_ly['CAS Media'],2)),calculate_percente(self.all_duration[1],self.duration_total_by_month[0]),calculate_percente(self.all_duration[2],self.duration_total_by_month[1]),calculate_percente(self.all_duration[3],self.duration_total_by_month[2]),calculate_percente(self.all_duration[1]+self.all_duration[2]+self.all_duration[3],self.duration_total_by_month[0]+self.duration_total_by_month[1]+self.duration_total_by_month[2]),calculate_percente(self.all_duration[4],self.duration_total_by_month[3]),calculate_percente(self.all_duration[5],self.duration_total_by_month[4]),calculate_percente(self.all_duration[6],self.duration_total_by_month[5]),calculate_percente(self.all_duration[4]+self.all_duration[5]+self.all_duration[6],self.duration_total_by_month[3]+self.duration_total_by_month[4]+self.duration_total_by_month[5]),calculate_percente(self.all_duration[7],self.duration_total_by_month[6]),calculate_percente(self.all_duration[8],self.duration_total_by_month[7]),calculate_percente(self.all_duration[9],self.duration_total_by_month[8]),calculate_percente(self.all_duration[7]+self.all_duration[8]+self.all_duration[9],self.duration_total_by_month[6]+self.duration_total_by_month[7]+self.duration_total_by_month[8]),calculate_percente(self.all_duration[10],self.duration_total_by_month[9]),calculate_percente(self.all_duration[11],self.duration_total_by_month[10]),calculate_percente(self.all_duration[12],self.duration_total_by_month[11]),calculate_percente(self.all_duration[10]+self.all_duration[11]+self.all_duration[12],self.duration_total_by_month[9]+self.duration_total_by_month[10]+self.duration_total_by_month[11]),calculate_percente(self.fn.sum_delta_time(self.all_duration.values()),self.fn.sum_delta_time(self.duration_total_by_month))])
-
-
-        data.append(['Nova S','{0} %'.format(round(self.duration_ly['Nova S'],2)),calculate_percente(nova_s[0],self.all_duration[1]),calculate_percente(nova_s[1],self.all_duration[2]),calculate_percente(nova_s[2],self.all_duration[3]),calculate_percente(nova_s[0]+nova_s[1]+nova_s[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(nova_s[3],self.all_duration[4]),calculate_percente(nova_s[4],self.all_duration[5]),calculate_percente(nova_s[5],self.all_duration[6]),calculate_percente(nova_s[3]+nova_s[4]+nova_s[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(nova_s[6],self.all_duration[7]),calculate_percente(nova_s[7],self.all_duration[8]),calculate_percente(nova_s[8],self.all_duration[9]),calculate_percente(nova_s[6]+nova_s[7]+nova_s[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(nova_s[9],self.all_duration[10]),calculate_percente(nova_s[10],self.all_duration[11]),calculate_percente(nova_s[11],self.all_duration[12]),calculate_percente(nova_s[9]+nova_s[10]+nova_s[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(nova_s.values()),self.fn.sum_delta_time(self.all_duration.values()))])
-
-        data.append(['N1','{0} %'.format(round(self.duration_ly['N1'],2)),calculate_percente(n1[0],self.all_duration[1]),calculate_percente(n1[1],self.all_duration[2]),calculate_percente(n1[2],self.all_duration[3]),calculate_percente(n1[0]+n1[1]+n1[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(n1[3],self.all_duration[4]),calculate_percente(n1[4],self.all_duration[5]),calculate_percente(n1[5],self.all_duration[6]),calculate_percente(n1[3]+n1[4]+n1[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(n1[6],self.all_duration[7]),calculate_percente(n1[7],self.all_duration[8]),calculate_percente(n1[8],self.all_duration[9]),calculate_percente(n1[6]+n1[7]+n1[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(n1[9],self.all_duration[10]),calculate_percente(n1[10],self.all_duration[11]),calculate_percente(n1[11],self.all_duration[12]),calculate_percente(n1[9]+n1[10]+n1[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(n1.values()),self.fn.sum_delta_time(self.all_duration.values()))])
+        data.append(['CAS Media',calculate_percente(self.all_duration_last_year,self.duration_total_by_month_last_year),calculate_percente(self.all_duration[1],self.duration_total_by_month[0]),calculate_percente(self.all_duration[2],self.duration_total_by_month[1]),calculate_percente(self.all_duration[3],self.duration_total_by_month[2]),calculate_percente(self.all_duration[1]+self.all_duration[2]+self.all_duration[3],self.duration_total_by_month[0]+self.duration_total_by_month[1]+self.duration_total_by_month[2]),calculate_percente(self.all_duration[4],self.duration_total_by_month[3]),calculate_percente(self.all_duration[5],self.duration_total_by_month[4]),calculate_percente(self.all_duration[6],self.duration_total_by_month[5]),calculate_percente(self.all_duration[4]+self.all_duration[5]+self.all_duration[6],self.duration_total_by_month[3]+self.duration_total_by_month[4]+self.duration_total_by_month[5]),calculate_percente(self.all_duration[7],self.duration_total_by_month[6]),calculate_percente(self.all_duration[8],self.duration_total_by_month[7]),calculate_percente(self.all_duration[9],self.duration_total_by_month[8]),calculate_percente(self.all_duration[7]+self.all_duration[8]+self.all_duration[9],self.duration_total_by_month[6]+self.duration_total_by_month[7]+self.duration_total_by_month[8]),calculate_percente(self.all_duration[10],self.duration_total_by_month[9]),calculate_percente(self.all_duration[11],self.duration_total_by_month[10]),calculate_percente(self.all_duration[12],self.duration_total_by_month[11]),calculate_percente(self.all_duration[10]+self.all_duration[11]+self.all_duration[12],self.duration_total_by_month[9]+self.duration_total_by_month[10]+self.duration_total_by_month[11]),calculate_percente(self.fn.sum_delta_time(self.all_duration.values()),self.fn.sum_delta_time(self.duration_total_by_month))])
 
 
-        data.append(['CAS Others (w/o SK, Nova Sport, Brainz)','{0} %'.format(round(self.duration_ly['CAS Others (w/o SK, Nova Sport, Brainz)'],2)),calculate_percente(self.all_duration[1]-nova_s[0]-n1[0],self.all_duration[1]),calculate_percente(self.all_duration[2]-nova_s[1]-n1[1],self.all_duration[2]),calculate_percente(self.all_duration[3]-nova_s[2]-n1[2],self.all_duration[3]),calculate_percente(self.all_duration[1]+self.all_duration[2]+self.all_duration[3]-nova_s[0]-nova_s[1]-nova_s[2]-n1[0]-n1[1]-n1[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(self.all_duration[4]-nova_s[3]-n1[3],self.all_duration[4]),calculate_percente(self.all_duration[5]-nova_s[4]-n1[4],self.all_duration[5]),calculate_percente(self.all_duration[6]-nova_s[5]-n1[5],self.all_duration[6]),calculate_percente(self.all_duration[4]+self.all_duration[5]+self.all_duration[6]-nova_s[3]-nova_s[4]-nova_s[5]-n1[3]-n1[4]-n1[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(self.all_duration[7]-nova_s[6]-n1[6],self.all_duration[7]),calculate_percente(self.all_duration[8]-nova_s[7]-n1[7],self.all_duration[8]),calculate_percente(self.all_duration[9]-nova_s[8]-n1[8],self.all_duration[9]),calculate_percente(self.all_duration[7]+self.all_duration[8]+self.all_duration[9]-nova_s[6]-nova_s[7]-nova_s[8]-n1[6]-n1[7]-n1[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(self.all_duration[10]-nova_s[9]-n1[9],self.all_duration[10]),calculate_percente(self.all_duration[11]-nova_s[10]-n1[10],self.all_duration[11]),calculate_percente(self.all_duration[12]-nova_s[11]-n1[11],self.all_duration[12]),calculate_percente(self.all_duration[10]+self.all_duration[11]+self.all_duration[12]-nova_s[9]-nova_s[10]-nova_s[11]-n1[9]-n1[10]-n1[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(self.all_duration.values())-self.fn.sum_delta_time(n1.values())-self.fn.sum_delta_time(nova_s.values()),self.fn.sum_delta_time(self.all_duration.values()))])
+        data.append(['Nova S',calculate_percente(nova_s_ly,self.all_duration_last_year),calculate_percente(nova_s[0],self.all_duration[1]),calculate_percente(nova_s[1],self.all_duration[2]),calculate_percente(nova_s[2],self.all_duration[3]),calculate_percente(nova_s[0]+nova_s[1]+nova_s[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(nova_s[3],self.all_duration[4]),calculate_percente(nova_s[4],self.all_duration[5]),calculate_percente(nova_s[5],self.all_duration[6]),calculate_percente(nova_s[3]+nova_s[4]+nova_s[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(nova_s[6],self.all_duration[7]),calculate_percente(nova_s[7],self.all_duration[8]),calculate_percente(nova_s[8],self.all_duration[9]),calculate_percente(nova_s[6]+nova_s[7]+nova_s[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(nova_s[9],self.all_duration[10]),calculate_percente(nova_s[10],self.all_duration[11]),calculate_percente(nova_s[11],self.all_duration[12]),calculate_percente(nova_s[9]+nova_s[10]+nova_s[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(nova_s.values()),self.fn.sum_delta_time(self.all_duration.values()))])
+
+        data.append(['N1',calculate_percente(n1_ly,self.all_duration_last_year),calculate_percente(n1[0],self.all_duration[1]),calculate_percente(n1[1],self.all_duration[2]),calculate_percente(n1[2],self.all_duration[3]),calculate_percente(n1[0]+n1[1]+n1[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(n1[3],self.all_duration[4]),calculate_percente(n1[4],self.all_duration[5]),calculate_percente(n1[5],self.all_duration[6]),calculate_percente(n1[3]+n1[4]+n1[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(n1[6],self.all_duration[7]),calculate_percente(n1[7],self.all_duration[8]),calculate_percente(n1[8],self.all_duration[9]),calculate_percente(n1[6]+n1[7]+n1[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(n1[9],self.all_duration[10]),calculate_percente(n1[10],self.all_duration[11]),calculate_percente(n1[11],self.all_duration[12]),calculate_percente(n1[9]+n1[10]+n1[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(n1.values()),self.fn.sum_delta_time(self.all_duration.values()))])
+
+
+        data.append(['CAS Others (w/o SK, Nova Sport, Brainz)',calculate_percente(self.all_duration_last_year-nova_s_ly-n1_ly,self.all_duration_last_year),calculate_percente(self.all_duration[1]-nova_s[0]-n1[0],self.all_duration[1]),calculate_percente(self.all_duration[2]-nova_s[1]-n1[1],self.all_duration[2]),calculate_percente(self.all_duration[3]-nova_s[2]-n1[2],self.all_duration[3]),calculate_percente(self.all_duration[1]+self.all_duration[2]+self.all_duration[3]-nova_s[0]-nova_s[1]-nova_s[2]-n1[0]-n1[1]-n1[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(self.all_duration[4]-nova_s[3]-n1[3],self.all_duration[4]),calculate_percente(self.all_duration[5]-nova_s[4]-n1[4],self.all_duration[5]),calculate_percente(self.all_duration[6]-nova_s[5]-n1[5],self.all_duration[6]),calculate_percente(self.all_duration[4]+self.all_duration[5]+self.all_duration[6]-nova_s[3]-nova_s[4]-nova_s[5]-n1[3]-n1[4]-n1[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(self.all_duration[7]-nova_s[6]-n1[6],self.all_duration[7]),calculate_percente(self.all_duration[8]-nova_s[7]-n1[7],self.all_duration[8]),calculate_percente(self.all_duration[9]-nova_s[8]-n1[8],self.all_duration[9]),calculate_percente(self.all_duration[7]+self.all_duration[8]+self.all_duration[9]-nova_s[6]-nova_s[7]-nova_s[8]-n1[6]-n1[7]-n1[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(self.all_duration[10]-nova_s[9]-n1[9],self.all_duration[10]),calculate_percente(self.all_duration[11]-nova_s[10]-n1[10],self.all_duration[11]),calculate_percente(self.all_duration[12]-nova_s[11]-n1[11],self.all_duration[12]),calculate_percente(self.all_duration[10]+self.all_duration[11]+self.all_duration[12]-nova_s[9]-nova_s[10]-nova_s[11]-n1[9]-n1[10]-n1[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(self.all_duration.values())-self.fn.sum_delta_time(n1.values())-self.fn.sum_delta_time(nova_s.values()),self.fn.sum_delta_time(self.all_duration.values()))])
 
         channels = self.fn.cas_other_channels
         for cas in self.fn.customers:
-            cas_total = cover_duration[cas]
+            cas_total = self.cas_duration[cas]
             cas_customer_total = self.cas_duration[cas]
+            cas_customer_total_last_year = self.cas_duration_last_year[cas]
 
-            data.append([cas,cas_total[0],cas_total[1],cas_total[2],cas_total[3],cas_total[4],cas_total[5],cas_total[6],cas_total[7],cas_total[8],cas_total[9],cas_total[10],cas_total[11],cas_total[12],cas_total[13],cas_total[14],cas_total[15],cas_total[16],cas_total[17]])
+            data.append([cas,calculate_percente(cas_customer_total_last_year,self.all_duration_last_year),calculate_percente(cas_total[0],self.all_duration[1]),calculate_percente(cas_total[1],self.all_duration[2]),calculate_percente(cas_total[2],self.all_duration[3]),calculate_percente(cas_total[0]+cas_total[1]+cas_total[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(cas_total[3],self.all_duration[4]),calculate_percente(cas_total[4],self.all_duration[5]),calculate_percente(cas_total[5],self.all_duration[6]),calculate_percente(cas_total[3]+cas_total[4]+cas_total[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(cas_total[6],self.all_duration[7]),calculate_percente(cas_total[7],self.all_duration[8]),calculate_percente(cas_total[8],self.all_duration[9]),calculate_percente(cas_total[6]+cas_total[7]+cas_total[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(cas_total[9],self.all_duration[10]),calculate_percente(cas_total[10],self.all_duration[11]),calculate_percente(cas_total[11],self.all_duration[12]),calculate_percente(cas_total[9]+cas_total[10]+cas_total[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(cas_total.values()),self.fn.sum_delta_time(self.all_duration.values()))])
 
             for c in channels:
                 if c == 'CAS Others (w/o SK, Nova Sport, Brainz)':
                     value = self.cas_others_duration[cas]
                     total_amount = self.fn.sum_delta_time(value.values())
+                    value_ly = self.cas_others_duration_last_year[cas]
                 else:
                     value = self.c_duration["{0}_{1}".format(cas,c)]
                     total_amount = self.fn.sum_delta_time(value)
+                    value_ly = self.c_duration_last_year["{0}_{1}".format(cas,c)]
 
-                data.append([c,'{0} %'.format(round(self.duration_ly["{0}_{1}".format(cas,c)],2)),calculate_percente(value[0],cas_customer_total[0]),calculate_percente(value[1],cas_customer_total[1]),calculate_percente(value[2],cas_customer_total[2]),calculate_percente(value[0]+value[1]+value[2],cas_customer_total[0]+cas_customer_total[1]+cas_customer_total[2]),calculate_percente(value[3],cas_customer_total[3]),calculate_percente(value[4],cas_customer_total[4]),calculate_percente(value[5],cas_customer_total[5]),calculate_percente(value[3]+value[4]+value[5],cas_customer_total[3]+cas_customer_total[4]+cas_customer_total[5]),calculate_percente(value[6],cas_customer_total[6]),calculate_percente(value[7],cas_customer_total[7]),calculate_percente(value[8],cas_customer_total[8]),calculate_percente(value[6]+value[7]+value[8],cas_customer_total[6]+cas_customer_total[7]+cas_customer_total[8]),calculate_percente(value[9],cas_customer_total[9]),calculate_percente(value[10],cas_customer_total[10]),calculate_percente(value[11],cas_customer_total[11]),calculate_percente(value[9]+value[10]+value[11],cas_customer_total[9]+cas_customer_total[10]+cas_customer_total[11]),calculate_percente(total_amount,self.fn.sum_delta_time(cas_customer_total.values()))])
+                data.append([c,calculate_percente(value_ly,cas_customer_total_last_year),calculate_percente(value[0],cas_customer_total[0]),calculate_percente(value[1],cas_customer_total[1]),calculate_percente(value[2],cas_customer_total[2]),calculate_percente(value[0]+value[1]+value[2],cas_customer_total[0]+cas_customer_total[1]+cas_customer_total[2]),calculate_percente(value[3],cas_customer_total[3]),calculate_percente(value[4],cas_customer_total[4]),calculate_percente(value[5],cas_customer_total[5]),calculate_percente(value[3]+value[4]+value[5],cas_customer_total[3]+cas_customer_total[4]+cas_customer_total[5]),calculate_percente(value[6],cas_customer_total[6]),calculate_percente(value[7],cas_customer_total[7]),calculate_percente(value[8],cas_customer_total[8]),calculate_percente(value[6]+value[7]+value[8],cas_customer_total[6]+cas_customer_total[7]+cas_customer_total[8]),calculate_percente(value[9],cas_customer_total[9]),calculate_percente(value[10],cas_customer_total[10]),calculate_percente(value[11],cas_customer_total[11]),calculate_percente(value[9]+value[10]+value[11],cas_customer_total[9]+cas_customer_total[10]+cas_customer_total[11]),calculate_percente(total_amount,self.fn.sum_delta_time(cas_customer_total.values()))])
 
         return data
 
@@ -681,7 +692,7 @@ class CoverCas():
 
         return data2
 
-    def marko_duration(self,cover_duration,customers):
+    def marko_duration(self,customers):
         data2 = []
         header_list = ['',get_quarter_header(self.CURRENT_YEAR,self.QUARTER,True)]
         header_list = [item for hl in header_list for item in hl]
@@ -690,9 +701,11 @@ class CoverCas():
 
         n1 = self.n1_nova_s_duration['N1']
         nova_s = self.n1_nova_s_duration['Nova S']
+        n1_ly = self.n1_nova_s_duration_last_year['N1']
+        nova_s_ly = self.n1_nova_s_duration_last_year['Nova S']
 
         # Cas Media
-        cas_media = ['Cas Media','{0} %'.format(round(self.duration_ly['CAS Media'],2))]
+        cas_media = ['Cas Media',calculate_percente(self.all_duration_last_year,self.duration_total_by_month_last_year)]
         for q in range(1,self.QUARTER):
             i = self.fn.range_by_quarter[q]
             cas_media += [calculate_percente(self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3],self.duration_total_by_month[i]+self.duration_total_by_month[i+1]+self.duration_total_by_month[i+2])]
@@ -707,7 +720,7 @@ class CoverCas():
         data2.append(cas_media)
 
         # N1
-        n = ['N1','{0} %'.format(round(self.duration_ly['N1'],2))]
+        n = ['N1',calculate_percente(n1_ly,self.all_duration_last_year)]
         for q in range(1,self.QUARTER):
             i = self.fn.range_by_quarter[q]
             n += [calculate_percente(n1[i]+n1[i+1]+n1[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
@@ -720,7 +733,7 @@ class CoverCas():
         data2.append(n)
 
         # Nova S
-        nova=['Nova S','{0} %'.format(round(self.duration_ly['Nova S'],2))]
+        nova=['Nova S',calculate_percente(nova_s_ly,self.all_duration_last_year)]
         for q in range(1,self.QUARTER):
             i = self.fn.range_by_quarter[q]
             nova += [calculate_percente(nova_s[i]+nova_s[i+1]+nova_s[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
@@ -733,7 +746,7 @@ class CoverCas():
         data2.append(nova)
 
         # Cas Others
-        cas_others = ['CAS Others (w/o SK, Nova Sport, Brainz)','{0} %'.format(round(self.duration_ly['CAS Others (w/o SK, Nova Sport, Brainz)'],2))]
+        cas_others = ['CAS Others (w/o SK, Nova Sport, Brainz)',calculate_percente(self.all_duration_last_year-nova_s_ly-n1_ly,self.all_duration_last_year)]
         for q in range(1,self.QUARTER):
             i = self.fn.range_by_quarter[q]
             cas_others += [calculate_percente(self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3]-nova_s[i]-nova_s[i+1]-nova_s[i+2]-n1[i]-n1[i+1]-n1[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
@@ -746,17 +759,23 @@ class CoverCas():
         data2.append(cas_others)
 
         for cas in customers:
-            cas_total = cover_duration[cas]
+            cas_total = self.cas_duration[cas]
             cas_customer_total = self.cas_duration[cas]
+            cas_customer_total_last_year = self.cas_duration_last_year[cas]
 
             data2.append([cas])
-            c = ['Cas Media',cas_total[0]]
+            c = ['Cas Media',calculate_percente(cas_customer_total_last_year,self.all_duration_last_year)]
             for q in range(1,self.QUARTER):
                 i = self.fn.duration_by_quarter[q]
-                c += [cas_total[i+3]]
+                c += [calculate_percente(cas_total[i]+cas_total[i+1]+cas_total[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
 
             i = self.fn.duration_by_quarter[self.QUARTER]
-            c += [cas_total[self.fn.duration_by_quarter[self.QUARTER]],cas_total[self.fn.duration_by_quarter[self.QUARTER]+1],cas_total[self.fn.duration_by_quarter[self.QUARTER]+2],cas_total[i+3],cas_total[17]]
+            c += [calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+1]),calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]+1],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+2]),calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]+2],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+3])]
+
+            i = self.fn.range_by_quarter[self.QUARTER]
+            c += [calculate_percente(cas_total[i]+cas_total[i+1]+cas_total[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
+        
+            c += [calculate_percente(self.fn.sum_delta_time(cas_total.values()),self.fn.sum_delta_time(self.all_duration.values()))]
 
             data2.append(c)
 
@@ -764,11 +783,13 @@ class CoverCas():
                 if c == 'CAS Others (w/o SK, Nova Sport, Brainz)':
                     value = self.cas_others_duration[cas]
                     total_amount = self.fn.sum_delta_time(value.values())
+                    value_ly = self.cas_others_duration_last_year[cas]
                 else:
                     value = self.c_duration["{0}_{1}".format(cas,c)]
                     total_amount = self.fn.sum_delta_time(value)
+                    value_ly = self.c_duration_last_year["{0}_{1}".format(cas,c)]
                 
-                ch = [c,'{0} %'.format(round(self.duration_ly["{0}_{1}".format(cas,c)],2))]
+                ch = [c,calculate_percente(value_ly,cas_customer_total_last_year)]
                 for q in range(1,self.QUARTER):
                     i = self.fn.range_by_quarter[q]
                     ch += [calculate_percente(value[i]+value[i+1]+value[i+2],cas_customer_total[i]+cas_customer_total[i+1]+cas_customer_total[i+2])]

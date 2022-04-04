@@ -19,7 +19,6 @@ class Functions():
     cas_channels = config.cas_channels()
     sk_nova = config.sk_nova()
     channel_map = config.channel_map
-    duration_ly = config.duration_last_year
 
     range_by_quarter = {
         1: 0,
@@ -329,6 +328,24 @@ class Functions():
         for i in arr:
             mysum += i
         return mysum
+
+    def duration_customer_total_ly(self,customer):
+        t = customer
+        total_time_arr = [total for (*total,year,month,customer,channel) in self.collection if year == self.CURRENT_YEAR-1 and customer == t]
+        flat_list = [item for tta in total_time_arr for item in tta]
+        return self.calculate_timedelta(flat_list)
+
+    def duration_all_customers_total_ly(self):
+        total_time_arr = [total for (*total,year,month,customer,channel) in self.collection if year == self.CURRENT_YEAR-1]
+        flat_list = [item for tta in total_time_arr for item in tta]
+        return self.calculate_timedelta(flat_list)
+
+    def duration_channel_total_ly(self,customer,channel):
+        t = customer
+        c = channel
+        total_time_arr = [total for (*total,year,month,customer,channel) in self.collection if year == self.CURRENT_YEAR-1  and customer == t and channel == c]
+        flat_list = [item for tta in total_time_arr for item in tta]
+        return self.calculate_timedelta(flat_list)
 
 
     #### PROSLA GOD

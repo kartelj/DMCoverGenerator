@@ -15,7 +15,6 @@ class CasFunctions():
     cas_collection = config.cas_collection()
 
 
-    cas_duration_ly = config.cas_duration_last_year
     cas_others_dm_pool = config.cas_others_dm_pool
     cas_non_agb = config.cas_non_agb
     cas_others = config.cas_others
@@ -481,6 +480,66 @@ class CasFunctions():
             mysum += i
         return mysum
 
+    def last_year_duration_channel_total(self):
+        res = {}
+        for cas in self.customers:
+            for c in self.cas_other_channels:
+                val = self.duration_customer_channel_ly(cas,c)
+                res["{0}_{1}".format(cas,c)] = val
+        return res
+
+    def last_year_cas_duration(self,all_channels):
+        res = {}
+        for cas in self.customers:
+            f = {}
+            total = datetime.timedelta()
+            for k,v in all_channels.items():
+                if cas in k:
+                    total += v
+            res[cas] = total
+        return res
+
+    def cas_others_duration_last_year(self,all_channels):
+        res = {}
+        for cas in self.customers:
+            f = {}
+            total = datetime.timedelta()
+            for k,v in all_channels.items():
+                if cas in k and 'N1' not in k and 'Nova S' not in k:
+                    total += v
+            res[cas] = total
+        return res
+
+    def duration_all_customers_total_ly(self):
+        total_time_arr = [total for (*total,year,month,customer,channel) in self.collection if year == self.CURRENT_YEAR-1]
+        flat_list = [item for tta in total_time_arr for item in tta]
+        return self.calculate_timedelta(flat_list)
+
+    def total_duration_for_months_last_year(self,total_for_one_month):
+        res = {}
+        total = datetime.timedelta()
+        for g in total_for_one_month.values():
+            total += g
+        return total
+
+    def n1_nova_s_duration_last_year(self,all_channels):
+        res = {}
+        for ch in ['N1','Nova S']:
+            f = {}
+            total = datetime.timedelta()
+            for k,v in all_channels.items():
+                channel = k.split('_')[1]
+                if ch == channel:
+                    total += v
+            res[ch] = total
+        return res
+
+    def duration_customer_channel_ly(self,customer,channel):
+        t = customer
+        c = channel
+        total_time_arr = [total for (*total,year,month,customer,channel) in self.collection if year == self.CURRENT_YEAR-1 and customer == t and channel == c]
+        flat_list = [item for tta in total_time_arr for item in tta]
+        return self.calculate_timedelta(flat_list)
 
   #########################
   ##### SOI ##############
