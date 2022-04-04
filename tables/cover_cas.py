@@ -383,7 +383,7 @@ class CoverCas():
         return data
 
 
-    def duration(self,cover_duration):
+    def duration(self):
         data = [['DURATION']]
         data.append(['Row Labels']+self.headers)
 
@@ -404,11 +404,11 @@ class CoverCas():
 
         channels = self.fn.cas_other_channels
         for cas in self.fn.customers:
-            cas_total = cover_duration[cas]
+            cas_total = self.cas_duration[cas]
             cas_customer_total = self.cas_duration[cas]
             cas_customer_total_last_year = self.cas_duration_last_year[cas]
 
-            data.append([cas,cas_total[0],cas_total[1],cas_total[2],cas_total[3],cas_total[4],cas_total[5],cas_total[6],cas_total[7],cas_total[8],cas_total[9],cas_total[10],cas_total[11],cas_total[12],cas_total[13],cas_total[14],cas_total[15],cas_total[16],cas_total[17]])
+            data.append([cas,calculate_percente(cas_customer_total_last_year,self.all_duration_last_year),calculate_percente(cas_total[0],self.all_duration[1]),calculate_percente(cas_total[1],self.all_duration[2]),calculate_percente(cas_total[2],self.all_duration[3]),calculate_percente(cas_total[0]+cas_total[1]+cas_total[2],self.all_duration[1]+self.all_duration[2]+self.all_duration[3]),calculate_percente(cas_total[3],self.all_duration[4]),calculate_percente(cas_total[4],self.all_duration[5]),calculate_percente(cas_total[5],self.all_duration[6]),calculate_percente(cas_total[3]+cas_total[4]+cas_total[5],self.all_duration[4]+self.all_duration[5]+self.all_duration[6]),calculate_percente(cas_total[6],self.all_duration[7]),calculate_percente(cas_total[7],self.all_duration[8]),calculate_percente(cas_total[8],self.all_duration[9]),calculate_percente(cas_total[6]+cas_total[7]+cas_total[8],self.all_duration[7]+self.all_duration[8]+self.all_duration[9]),calculate_percente(cas_total[9],self.all_duration[10]),calculate_percente(cas_total[10],self.all_duration[11]),calculate_percente(cas_total[11],self.all_duration[12]),calculate_percente(cas_total[9]+cas_total[10]+cas_total[11],self.all_duration[10]+self.all_duration[11]+self.all_duration[12]),calculate_percente(self.fn.sum_delta_time(cas_total.values()),self.fn.sum_delta_time(self.all_duration.values()))])
 
             for c in channels:
                 if c == 'CAS Others (w/o SK, Nova Sport, Brainz)':
@@ -692,7 +692,7 @@ class CoverCas():
 
         return data2
 
-    def marko_duration(self,cover_duration,customers):
+    def marko_duration(self,customers):
         data2 = []
         header_list = ['',get_quarter_header(self.CURRENT_YEAR,self.QUARTER,True)]
         header_list = [item for hl in header_list for item in hl]
@@ -759,18 +759,23 @@ class CoverCas():
         data2.append(cas_others)
 
         for cas in customers:
-            cas_total = cover_duration[cas]
+            cas_total = self.cas_duration[cas]
             cas_customer_total = self.cas_duration[cas]
             cas_customer_total_last_year = self.cas_duration_last_year[cas]
 
             data2.append([cas])
-            c = ['Cas Media',cas_total[0]]
+            c = ['Cas Media',calculate_percente(cas_customer_total_last_year,self.all_duration_last_year)]
             for q in range(1,self.QUARTER):
                 i = self.fn.duration_by_quarter[q]
-                c += [cas_total[i+3]]
+                c += [calculate_percente(cas_total[i]+cas_total[i+1]+cas_total[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
 
             i = self.fn.duration_by_quarter[self.QUARTER]
-            c += [cas_total[self.fn.duration_by_quarter[self.QUARTER]],cas_total[self.fn.duration_by_quarter[self.QUARTER]+1],cas_total[self.fn.duration_by_quarter[self.QUARTER]+2],cas_total[i+3],cas_total[17]]
+            c += [calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+1]),calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]+1],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+2]),calculate_percente(cas_total[self.fn.range_by_quarter[self.QUARTER]+2],self.all_duration[self.fn.range_by_quarter[self.QUARTER]+3])]
+
+            i = self.fn.range_by_quarter[self.QUARTER]
+            c += [calculate_percente(cas_total[i]+cas_total[i+1]+cas_total[i+2],self.all_duration[i+1]+self.all_duration[i+2]+self.all_duration[i+3])]
+        
+            c += [calculate_percente(self.fn.sum_delta_time(cas_total.values()),self.fn.sum_delta_time(self.all_duration.values()))]
 
             data2.append(c)
 

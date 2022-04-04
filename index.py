@@ -125,7 +125,6 @@ def run(year,quarter):
     start = len(data)+1
     data += duration_res['data']
     cover_rows['duration'] = [start,len(data)]
-    duration_header = duration_res['cas_header']
 
     add_rows(data,3)
     print('kreira SOI total tabelu')
@@ -294,7 +293,7 @@ def run(year,quarter):
 
     add_rows(data3,3)
     start = len(data3)+1
-    data3 += cas_cover3.duration(duration_header)
+    data3 += cas_cover3.duration()
     cover_cas_rows['duration'] = [start,len(data3)]
 
     add_rows(data3,3)
@@ -339,12 +338,12 @@ def run(year,quarter):
 
     add_rows(data4,3)
     start = len(data4)+1
-    data4 += cas_cover3.marko_duration(duration_header,['DM Pool','MEDIA House','MEDIA Pool'])
+    data4 += cas_cover3.marko_duration(['DM Pool','MEDIA House','MEDIA Pool'])
     cover_cas_marko_rows['duration_1'] = [start,len(data4)]
 
     add_rows(data4,3)
     start = len(data4)+1
-    data4 += cas_cover3.marko_duration(duration_header,['MEDIACOM','ONE MEDIA','OSTALO (A, N, O)'])
+    data4 += cas_cover3.marko_duration(['MEDIACOM','ONE MEDIA','OSTALO (A, N, O)'])
     cover_cas_marko_rows['duration_2'] = [start,len(data4)]
 
     add_rows(data4,3)
